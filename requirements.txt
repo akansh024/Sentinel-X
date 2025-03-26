@@ -1,2 +1,0 @@
-pycryptodome==3.19.0
-tk==0.1.0
