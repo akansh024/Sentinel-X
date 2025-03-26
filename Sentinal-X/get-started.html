@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get Started - Sentinal-X</title>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Roboto+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #000;
+            color: #00ff00;
+            font-family: 'Roboto Mono', monospace;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Binary Background */
+        .binary-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .binary-bg span {
+            position: absolute;
+            color: #00ff00;
+            font-size: 1.2rem;
+            opacity: 0.3;
+            animation: fall 5s linear infinite;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100vh); }
+        }
+
+        /* Navbar */
+        .navbar {
+            padding: 1.5rem 5%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 255, 0, 0.1);
+        }
+
+        .logo img {
+            height: 80px;
+            width: auto;
+            filter: drop-shadow(0 0 5px #00ff00);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: #00ff00;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .nav-links a:hover {
+            color: #00b894;
+            text-shadow: 0 0 5px #00ff00;
+        }
+
+        /* Hero Section */
+        .get-started-hero {
+            padding: 8rem 5%;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.7);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .get-started-hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            color: #00ff00;
+            font-family: 'Orbitron', sans-serif;
+            text-shadow: 0 0 10px #00ff00;
+        }
+
+        .get-started-hero p {
+            font-size: 1.5rem;
+            color: #00ff00;
+            margin-bottom: 2rem;
+            text-shadow: 0 0 5px #00ff00;
+        }
+
+        /* Steps Section */
+        .steps {
+            padding: 5rem 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .step {
+            display: flex;
+            align-items: center;
+            margin-bottom: 4rem;
+            background: rgba(0, 0, 0, 0.7);
+            border: 1px solid #00ff00;
+            box-shadow: 0 0 10px #00ff00;
+            border-radius: 10px;
+            padding: 2rem;
+        }
+
+        .step-icon {
+            font-size: 2.5rem;
+            color: #00ff00;
+            margin-right: 2rem;
+            text-shadow: 0 0 5px #00ff00;
+        }
+
+        .step-content h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: #00ff00;
+            font-family: 'Orbitron', sans-serif;
+            text-shadow: 0 0 5px #00ff00;
+        }
+
+        .step-content p {
+            font-size: 1.1rem;
+            color: #00ff00;
+            line-height: 1.8;
+        }
+
+        /* CTA Section */
+        .cta {
+            padding: 5rem 5%;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.7);
+            border-top: 1px solid #00ff00;
+        }
+
+        .cta h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: #00ff00;
+            font-family: 'Orbitron', sans-serif;
+            text-shadow: 0 0 10px #00ff00;
+        }
+
+        .cta p {
+            font-size: 1.2rem;
+            color: #00ff00;
+            margin-bottom: 2rem;
+            text-shadow: 0 0 5px #00ff00;
+        }
+
+        .cta .btn {
+            padding: 1rem 2rem;
+            border: 2px solid #00ff00;
+            border-radius: 5px;
+            background-color: #000;
+            color: #00ff00;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Orbitron', sans-serif;
+            text-decoration: none;
+        }
+
+        .cta .btn:hover {
+            background-color: #00ff00;
+            color: #000;
+            box-shadow: 0 0 10px #00ff00;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #000;
+            padding: 3rem 5%;
+            text-align: center;
+            border-top: 1px solid #00ff00;
+        }
+
+        footer p {
+            color: #00ff00;
+        }
+
+        footer a {
+            color: #00b894;
+            text-decoration: none;
+            margin: 0 1rem;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <!-- Binary Background -->
+    <div class="binary-bg" id="binary-bg"></div>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo"><img src="Black_and_Green_Modern_Tech_Company_Logo-removebg-preview.png" alt="Sentinal-X Logo"></div>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="tools.html">Tools</a>
+            <a href="about.html">About</a>
+            <a href="contact.html">Contact</a>
+            <a href="auth.html" class="btn btn-secondary">Login/Signup</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="get-started-hero">
+        <h1>Get Started with Sentinal-X</h1>
+        <p>Follow these simple steps to secure your digital life with our advanced cybersecurity tools.</p>
+    </section>
+
+    <!-- Steps Section -->
+    <section class="steps">
+        <div class="step">
+            <div class="step-icon"><i class="fas fa-user-plus"></i></div>
+            <div class="step-content">
+                <h2>Create an Account</h2>
+                <p>
+                    Sign up for a Sentinal-X account to access our suite of cybersecurity tools. It's quick, easy, and free to get started.
+                </p>
+            </div>
+        </div>
+
+        <div class="step">
+            <div class="step-icon"><i class="fas fa-tools"></i></div>
+            <div class="step-content">
+                <h2>Explore Our Tools</h2>
+                <p>
+                    Choose from our range of tools, including secure chat, port scanning, password strength testing, and vulnerability scanning.
+                </p>
+            </div>
+        </div>
+
+        <div class="step">
+            <div class="step-icon"><i class="fas fa-shield-alt"></i></div>
+            <div class="step-content">
+                <h2>Secure Your Digital Life</h2>
+                <p>
+                    Start using our tools to protect your data, devices, and online presence from cyber threats.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <h2>Ready to Get Started?</h2>
+        <p>Join Sentinal-X today and take the first step towards a safer online experience.</p>
+        <a href="auth.html" class="btn">Sign Up Now</a>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2025 Sentinal-X. All rights reserved.</p>
+        <div style="margin-top: 1rem;">
+            <a href="privacy.html">Privacy Policy</a>
+            <a href="terms.html">Terms of Service</a>
+        </div>
+    </footer>
+
+    <!-- Binary Background Script -->
+    <script>
+        const binaryBg = document.getElementById('binary-bg');
+
+        function createBinary() {
+            const binaryChars = ['0', '1'];
+            const span = document.createElement('span');
+            span.textContent = binaryChars[Math.floor(Math.random() * binaryChars.length)];
+            span.style.left = Math.random() * 100 + 'vw';
+            span.style.animationDuration = Math.random() * 3 + 2 + 's';
+            binaryBg.appendChild(span);
+
+            setTimeout(() => {
+                span.remove();
+            }, 5000);
+        }
+
+        setInterval(createBinary, 100);
+    </script>
+</body>
+</html>
