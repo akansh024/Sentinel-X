@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentinel-X | Secure Chat</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        :root {
+            --primary-color: #6c63ff;
+            --secondary-color: #4d44db;
+            --dark-color: #2a2a3c;
+            --light-color: #f8f9fa;
+            --success-color: #28a745;
+            --danger-color: #dc3545;
+            --warning-color: #ffc107;
+            --info-color: #17a2b8;
+        }
+        
+        body {
+            background-color: #f5f7fb;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        #app-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border-radius: 15px;
+            overflow: hidden;
+        }
+        
+        #chat-container {
+            display: flex;
+            height: 80vh;
+            background-color: white;
+        }
+        
+        #sidebar {
+            width: 300px;
+            background-color: var(--dark-color);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        #user-header {
+            padding: 1.5rem;
+            background-color: rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        #user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+        }
+        
+        #search-container {
+            padding: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        #search-input {
+            background-color: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+            border-radius: 20px;
+            padding: 0.5rem 1rem;
+            width: 100%;
+        }
+        
+        #search-input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+        
+        #user-list {
+            flex: 1;
+            overflow-y: auto;
+        }
+        
+        .user-item {
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .user-item:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+        
+        .user-item.active {
+            background-color: var(--primary-color);
+        }
+        
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--info-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+        }
+        
+        .user-info {
+            flex: 1;
+        }
+        
+        .user-name {
+            font-weight: 500;
+            margin-bottom: 0.2rem;
+        }
+        
+        .user-status {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.7);
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        
+        .status-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: var(--success-color);
+        }
+        
+        #chat-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        #chat-header {
+            padding: 1.5rem;
+            background-color: white;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        #chat-messages {
+            flex: 1;
+            padding: 1.5rem;
+            overflow-y: auto;
+            background-color: #f5f7fb;
+            background-image: radial-gradient(#e1e5f0 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+        
+        .message {
+            max-width: 70%;
+            margin-bottom: 1rem;
+            padding: 0.8rem 1.2rem;
+            border-radius: 15px;
+            position: relative;
+            animation: fadeIn 0.3s ease-out;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .sent {
+            background-color: var(--primary-color);
+            color: white;
+            margin-left: auto;
+            border-bottom-right-radius: 5px;
+        }
+        
+        .received {
+            background-color: white;
+            margin-right: auto;
+            border-bottom-left-radius: 5px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+        
+        .message-time {
+            font-size: 0.7rem;
+            opacity: 0.7;
+            margin-top: 0.3rem;
+            display: block;
+            text-align: right;
+        }
+        
+        .received .message-time {
+            color: #666;
+        }
+        
+        .sent .message-time {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        #message-input-container {
+            padding: 1rem;
+            background-color: white;
+            border-top: 1px solid #eee;
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        #message-input {
+            flex: 1;
+            border-radius: 20px;
+            border: 1px solid #ddd;
+            padding: 0.8rem 1.2rem;
+            outline: none;
+            transition: all 0.2s;
+        }
+        
+        #message-input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.2rem rgba(108, 99, 255, 0.25);
+        }
+        
+        #send-btn {
+            border-radius: 50%;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--primary-color);
+            border: none;
+            color: white;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        #send-btn:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+        
+        #send-btn:active {
+            transform: translateY(0);
+        }
+        
+        .typing-indicator {
+            font-size: 0.8rem;
+            color: #666;
+            padding: 0.5rem 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .typing-dots {
+            display: flex;
+            gap: 0.2rem;
+        }
+        
+        .typing-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background-color: #999;
+            animation: typingAnimation 1.4s infinite ease-in-out;
+        }
+        
+        .typing-dot:nth-child(1) {
+            animation-delay: 0s;
+        }
+        
+        .typing-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        
+        .typing-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+        
+        @keyframes typingAnimation {
+            0%, 60%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-5px); }
+        }
+        
+        .message-status {
+            margin-left: 0.5rem;
+            font-size: 0.7rem;
+        }
+        
+        /* Responsive design */
+        @media (max-width: 768px) {
+            #chat-container {
+                flex-direction: column;
+                height: 100vh;
+            }
+            
+            #sidebar {
+                width: 100%;
+                height: 200px;
+            }
+            
+            #user-list {
+                height: calc(200px - 120px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="app-container">
+        <div id="chat-container">
+            <!-- Sidebar with user list -->
+            <div id="sidebar">
+                <div id="user-header">
+                    <div id="user-avatar">SX</div>
+                    <div>
+                        <div class="user-name">Sentinel-X Chat</div>
+                        <div class="user-status">
+                            <span class="status-indicator"></span>
+                            <span id="connection-status">Secure Connection</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="search-container">
+                    <input type="text" id="search-input" placeholder="Search contacts...">
+                </div>
+                
+                <div id="user-list">
+                    <!-- User items will be populated by JavaScript -->
+                    <div class="user-item">
+                        <div class="user-avatar">JD</div>
+                        <div class="user-info">
+                            <div class="user-name">John Doe</div>
+                            <div class="user-status">
+                                <span class="status-indicator"></span>
+                                <span>Online</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- More users will be added dynamically -->
+                </div>
+            </div>
+            
+            <!-- Main chat area -->
+            <div id="chat-area">
+                <div id="chat-header">
+                    <div class="user-avatar">JD</div>
+                    <div>
+                        <div class="user-name">John Doe</div>
+                        <div class="user-status">
+                            <span class="status-indicator"></span>
+                            <span id="contact-status">Online</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="chat-messages">
+                    <!-- Messages will be populated by JavaScript -->
+                    <div class="message received">
+                        Hey there! How's the secure chat project going?
+                        <span class="message-time">10:30 AM</span>
+                    </div>
+                    
+                    <div class="message sent">
+                        Going great! Just implementing end-to-end encryption now.
+                        <span class="message-time">10:32 AM <i class="fas fa-check-double message-status"></i></span>
+                    </div>
+                    
+                    <div class="typing-indicator" id="typing-indicator" style="display: none;">
+                        <span>John is typing</span>
+                        <div class="typing-dots">
+                            <div class="typing-dot"></div>
+                            <div class="typing-dot"></div>
+                            <div class="typing-dot"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="message-input-container">
+                    <input type="text" id="message-input" placeholder="Type a secure message...">
+                    <button id="send-btn">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="chat.js"></script>
+</body>
+</html>

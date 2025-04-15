@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms of Service - Sentinal-X</title>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Roboto+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #000;
+            color: #00ff00;
+            font-family: 'Roboto Mono', monospace;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Binary Background */
+        .binary-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .binary-bg span {
+            position: absolute;
+            color: #00ff00;
+            font-size: 1.2rem;
+            opacity: 0.3;
+            animation: fall 5s linear infinite;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100vh); }
+        }
+
+        /* Navbar */
+        .navbar {
+            padding: 1.5rem 5%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 255, 0, 0.1);
+        }
+
+        .logo img {
+            height: 80px;
+            width: auto;
+            filter: drop-shadow(0 0 5px #00ff00);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: #00ff00;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .nav-links a:hover {
+            color: #00b894;
+            text-shadow: 0 0 5px #00ff00;
+        }
+
+        /* Hero Section */
+        .terms-hero {
+            padding: 8rem 5%;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.7);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .terms-hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            color: #00ff00;
+            font-family: 'Orbitron', sans-serif;
+            text-shadow: 0 0 10px #00ff00;
+        }
+
+        .terms-hero p {
+            font-size: 1.5rem;
+            color: #00ff00;
+            margin-bottom: 2rem;
+            text-shadow: 0 0 5px #00ff00;
+        }
+
+        /* Terms Content */
+        .terms-content {
+            padding: 5rem 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(0, 0, 0, 0.7);
+            border: 1px solid #00ff00;
+            box-shadow: 0 0 10px #00ff00;
+            border-radius: 10px;
+            color: #00ff00;
+            z-index: 10;
+            position: relative;
+        }
+
+        .terms-content h2 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: #00ff00;
+            font-family: 'Orbitron', sans-serif;
+            text-shadow: 0 0 5px #00ff00;
+        }
+
+        .terms-content p {
+            font-size: 1.1rem;
+            color: #00ff00;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .terms-content ul {
+            margin-bottom: 1.5rem;
+            padding-left: 2rem;
+        }
+
+        .terms-content ul li {
+            margin-bottom: 0.5rem;
+            color: #00ff00;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #000;
+            padding: 3rem 5%;
+            text-align: center;
+            border-top: 1px solid #00ff00;
+        }
+
+        footer p {
+            color: #00ff00;
+        }
+
+        footer a {
+            color: #00b894;
+            text-decoration: none;
+            margin: 0 1rem;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <!-- Binary Background -->
+    <div class="binary-bg" id="binary-bg"></div>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo"><img src="Black_and_Green_Modern_Tech_Company_Logo-removebg-preview.png" alt="Sentinal-X Logo"></div>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="tools.html">Tools</a>
+            <a href="about.html">About</a>
+            <a href="contact.html">Contact</a>
+            <a href="auth.html" class="btn btn-secondary">Login/Signup</a>
+        </div>
+    </nav>
+
+    <section class="terms-hero">
+        <h1>Terms of Service</h1>
+        <p>Please read these terms carefully before using our website and services.</p>
+    </section>
+
+    <section class="terms-content">
+        <h2>Introduction</h2>
+        <p>Welcome to Sentinel-X! By using our website and services, you agree to comply with these Terms of Service.</p>
+
+        <h2>Eligibility</h2>
+        <p>You must be at least 18 years old or legally capable of entering a binding agreement.</p>
+
+        <h2>Use of Services</h2>
+        <p>You agree to use our services only for lawful purposes. Prohibited activities include:</p>
+        <ul>
+            <li>Violating laws or regulations.</li>
+            <li>Attempting unauthorized access to our systems.</li>
+            <li>Engaging in activities that disrupt our services.</li>
+            <li>Transmitting harmful or malicious content.</li>
+        </ul>
+
+        <h2>Intellectual Property</h2>
+        <p>All content, including text, graphics, and software, is the property of Sentinel-X and protected by intellectual property laws.</p>
+
+        <h2>User Accounts</h2>
+        <p>You are responsible for maintaining your account credentials' confidentiality. Notify us of any unauthorized use.</p>
+
+        <h2>Limitation of Liability</h2>
+        <p>Sentinel-X is not liable for indirect damages. Our total liability is limited to any fees paid in the last six months.</p>
+
+        <h2>Termination</h2>
+        <p>We reserve the right to suspend or terminate access for violations of these terms.</p>
+
+        <h2>Changes to These Terms</h2>
+        <p>We may update these Terms of Service. Continued use after changes means acceptance of the new terms.</p>
+
+        <h2>Contact Us</h2>
+        <p>
+            <strong>Email:</strong> support@sentinelx.com<br>
+            <strong>Phone:</strong> +1 (123) 456-7890
+        </p>
+    </section>
+
+    <footer>
+        <p>© 2025 Sentinel-X. All rights reserved.</p>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms of Service</a>
+    </footer>
+
+</body>
+</html>

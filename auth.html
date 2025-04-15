@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentinal-X - Login / Signup</title>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Roboto+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #000;
+            color: #00ff00;
+            font-family: 'Roboto Mono', monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Binary Background */
+        .binary-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .binary-bg span {
+            position: absolute;
+            color: #00ff00;
+            font-size: 1.2rem;
+            opacity: 0.3;
+            animation: fall 5s linear infinite;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100vh); }
+        }
+
+        /* Auth Container */
+        .auth-container {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 2.5rem;
+            border-radius: 10px;
+            width: 100%;
+            max-width: 400px;
+            border: 1px solid #00ff00;
+            box-shadow: 0 0 10px #00ff00;
+            z-index: 10;
+        }
+
+        .auth-container h2 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            color: #00ff00;
+            font-family: 'Orbitron', sans-serif;
+            text-shadow: 0 0 5px #00ff00;
+        }
+
+        .auth-container p {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            color: #00ff00;
+        }
+
+        .auth-container a {
+            color: #00b894;
+            text-decoration: none;
+        }
+
+        .auth-container a:hover {
+            text-decoration: underline;
+        }
+
+        /* Form Group */
+        .form-group {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #00ff00;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #00ff00;
+            border-radius: 5px;
+            background-color: #111;
+            color: #00ff00;
+            font-size: 1rem;
+            font-family: 'Roboto Mono', monospace;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus {
+            border-color: #00b894;
+            outline: none;
+            box-shadow: 0 0 5px #00b894;
+        }
+
+        .form-group input::placeholder {
+            color: #00ff00;
+            opacity: 0.5;
+        }
+
+        /* Button */
+        .btn {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #00ff00;
+            border-radius: 5px;
+            background-color: #000;
+            color: #00ff00;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .btn:hover {
+            background-color: #00ff00;
+            color: #000;
+            box-shadow: 0 0 10px #00ff00;
+        }
+
+        .btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        /* Toggle Auth */
+        .toggle-auth {
+            text-align: center;
+            margin-top: 1.5rem;
+        }
+
+        .toggle-auth a {
+            color: #00b894;
+            font-weight: 500;
+        }
+
+        .toggle-auth a:hover {
+            text-decoration: underline;
+        }
+
+        /* Error Handling */
+        .error-message {
+            color: #ff0000;
+            font-size: 0.8rem;
+            margin-top: 0.3rem;
+            display: none;
+            text-shadow: 0 0 3px #ff0000;
+        }
+
+        input.error {
+            border-color: #ff0000 !important;
+            box-shadow: 0 0 5px #ff0000 !important;
+        }
+
+        /* Forgot Password */
+        .forgot-password {
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        /* Success Message */
+        .success-message {
+            color: #00ff00;
+            text-align: center;
+            margin-top: 1rem;
+            display: none;
+        }
+
+        /* Loading Spinner */
+        .fa-spinner {
+            margin-right: 8px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Binary Background -->
+    <div class="binary-bg" id="binary-bg"></div>
+
+    <!-- Login Page -->
+    <div class="auth-container" id="login-page">
+        <h2>Login to Sentinal-X</h2>
+        <p>Welcome back! Please enter your credentials to access your account.</p>
+        <form id="login-form">
+            <div class="form-group">
+                <label for="login-email">Email</label>
+                <input type="email" id="login-email" placeholder="Enter your email" required>
+                <div class="error-message" id="login-email-error"></div>
+            </div>
+            <div class="form-group">
+                <label for="login-password">Password</label>
+                <input type="password" id="login-password" placeholder="Enter your password" required>
+                <div class="error-message" id="login-password-error"></div>
+            </div>
+            <button type="submit" class="btn" id="login-btn">Login</button>
+        </form>
+        <div class="success-message" id="login-success"></div>
+        <div class="toggle-auth">
+            <p>Don't have an account? <a href="#" id="show-signup">Sign up</a></p>
+        </div>
+        <div class="forgot-password">
+            <a href="#" id="forgot-password">Forgot password?</a>
+        </div>
+    </div>
+
+    <!-- Signup Page -->
+    <div class="auth-container" id="signup-page" style="display: none;">
+        <h2>Create an Account</h2>
+        <p>Join Sentinal-X to access advanced cybersecurity tools.</p>
+        <form id="signup-form">
+            <div class="form-group">
+                <label for="signup-name">Full Name</label>
+                <input type="text" id="signup-name" placeholder="Enter your full name" required>
+                <div class="error-message" id="signup-name-error"></div>
+            </div>
+            <div class="form-group">
+                <label for="signup-email">Email</label>
+                <input type="email" id="signup-email" placeholder="Enter your email" required>
+                <div class="error-message" id="signup-email-error"></div>
+            </div>
+            <div class="form-group">
+                <label for="signup-password">Password (min 8 characters)</label>
+                <input type="password" id="signup-password" placeholder="Create a password" required minlength="8">
+                <div class="error-message" id="signup-password-error"></div>
+            </div>
+            <div class="form-group">
+                <label for="signup-confirm-password">Confirm Password</label>
+                <input type="password" id="signup-confirm-password" placeholder="Confirm your password" required>
+                <div class="error-message" id="signup-confirm-error"></div>
+            </div>
+            <button type="submit" class="btn" id="signup-btn">Sign Up</button>
+        </form>
+        <div class="success-message" id="signup-success"></div>
+        <div class="toggle-auth">
+            <p>Already have an account? <a href="#" id="show-login">Login</a></p>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Supabase
+        const supabaseUrl = 'https://sudchtocfhhwctctqdfk.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN1ZGNodG9jZmhod2N0Y3RxZGZrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQ1NjY3NDUsImV4cCI6MjA2MDE0Mjc0NX0.S7iBl3zuUJyQ1zbjmOqaWtcaADJpKepxnAvn5xyiv64';
+        const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+
+        // Binary Background Script
+        const binaryBg = document.getElementById('binary-bg');
+        function createBinary() {
+            const binaryChars = ['0', '1'];
+            const span = document.createElement('span');
+            span.textContent = binaryChars[Math.floor(Math.random() * binaryChars.length)];
+            span.style.left = Math.random() * 100 + 'vw';
+            span.style.animationDuration = Math.random() * 3 + 2 + 's';
+            binaryBg.appendChild(span);
+            setTimeout(() => span.remove(), 5000);
+        }
+        setInterval(createBinary, 100);
+
+        // DOM Elements
+        const loginPage = document.getElementById('login-page');
+        const signupPage = document.getElementById('signup-page');
+        const showSignup = document.getElementById('show-signup');
+        const showLogin = document.getElementById('show-login');
+        const loginForm = document.getElementById('login-form');
+        const signupForm = document.getElementById('signup-form');
+        const forgotPassword = document.getElementById('forgot-password');
+        const loginBtn = document.getElementById('login-btn');
+        const signupBtn = document.getElementById('signup-btn');
+
+        // Toggle between Login and Signup pages
+        showSignup.addEventListener('click', (e) => {
+            e.preventDefault();
+            loginPage.style.display = 'none';
+            signupPage.style.display = 'block';
+            clearAllErrors();
+        });
+
+        showLogin.addEventListener('click', (e) => {
+            e.preventDefault();
+            signupPage.style.display = 'none';
+            loginPage.style.display = 'block';
+            clearAllErrors();
+        });
+
+        // Helper Functions
+        function setLoading(button, isLoading) {
+            button.disabled = isLoading;
+            button.innerHTML = isLoading 
+                ? '<i class="fas fa-spinner fa-spin"></i> Processing...' 
+                : button.textContent.replace('<i class="fas fa-spinner fa-spin"></i> ', '');
+        }
+
+        function showError(elementId, message) {
+            const element = document.getElementById(elementId);
+            element.textContent = message;
+            element.style.display = 'block';
+            const input = document.getElementById(elementId.replace('-error', ''));
+            input.classList.add('error');
+        }
+
+        function clearError(elementId) {
+            const element = document.getElementById(elementId);
+            element.style.display = 'none';
+            const input = document.getElementById(elementId.replace('-error', ''));
+            input.classList.remove('error');
+        }
+
+        function clearAllErrors() {
+            document.querySelectorAll('.error-message').forEach(el => {
+                el.style.display = 'none';
+            });
+            document.querySelectorAll('input').forEach(input => {
+                input.classList.remove('error');
+            });
+        }
+
+        function showSuccess(elementId, message) {
+            const element = document.getElementById(elementId);
+            element.textContent = message;
+            element.style.display = 'block';
+            setTimeout(() => {
+                element.style.display = 'none';
+            }, 5000);
+        }
+
+        // Form Validation
+        function validateEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+
+        function validatePassword(password) {
+            return password.length >= 8;
+        }
+
+        // Login Form Submission
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            clearAllErrors();
+            
+            const email = document.getElementById('login-email').value.trim();
+            const password = document.getElementById('login-password').value.trim();
+            
+            // Validate inputs
+            if (!validateEmail(email)) {
+                showError('login-email-error', 'Please enter a valid email address');
+                return;
+            }
+            
+            if (!validatePassword(password)) {
+                showError('login-password-error', 'Password must be at least 8 characters');
+                return;
+            }
+            
+            setLoading(loginBtn, true);
+            
+            try {
+                const { data, error } = await supabase.auth.signInWithPassword({
+                    email: email,
+                    password: password
+                });
+                
+                if (error) throw error;
+                
+                // Redirect to chat page on successful login
+                window.location.href = '/chat.html';
+            } catch (error) {
+                console.error('Login error:', error);
+                showError('login-password-error', 'Invalid email or password. Please try again.');
+            } finally {
+                setLoading(loginBtn, false);
+            }
+        });
+
+        // Signup Form Submission
+        signupForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            clearAllErrors();
+            
+            const name = document.getElementById('signup-name').value.trim();
+            const email = document.getElementById('signup-email').value.trim();
+            const password = document.getElementById('signup-password').value.trim();
+            const confirmPassword = document.getElementById('signup-confirm-password').value.trim();
+            
+            // Validate inputs
+            if (name.length < 2) {
+                showError('signup-name-error', 'Please enter your full name');
+                return;
+            }
+            
+            if (!validateEmail(email)) {
+                showError('signup-email-error', 'Please enter a valid email address');
+                return;
+            }
+            
+            if (!validatePassword(password)) {
+                showError('signup-password-error', 'Password must be at least 8 characters');
+                return;
+            }
+            
+            if (password !== confirmPassword) {
+                showError('signup-confirm-error', 'Passwords do not match');
+                return;
+            }
+            
+            setLoading(signupBtn, true);
+            
+            try {
+                const { data, error } = await supabase.auth.signUp({
+                    email: email,
+                    password: password,
+                    options: {
+                        data: {
+                            full_name: name
+                        }
+                    }
+                });
+                
+                if (error) throw error;
+                
+                showSuccess('signup-success', 'Signup successful! Please check your email for confirmation.');
+                signupForm.reset();
+                signupPage.style.display = 'none';
+                loginPage.style.display = 'block';
+            } catch (error) {
+                console.error('Signup error:', error);
+                if (error.message.includes('already registered')) {
+                    showError('signup-email-error', 'This email is already registered');
+                } else {
+                    showError('signup-email-error', 'Signup failed. Please try again.');
+                }
+            } finally {
+                setLoading(signupBtn, false);
+            }
+        });
+
+        // Password Reset
+        forgotPassword.addEventListener('click', async (e) => {
+            e.preventDefault();
+            const email = prompt('Please enter your email to reset password:');
+            
+            if (email && validateEmail(email)) {
+                try {
+                    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+                        redirectTo: window.location.origin + '/reset-password.html'
+                    });
+                    
+                    if (error) throw error;
+                    
+                    alert('Password reset link sent to your email!');
+                } catch (error) {
+                    console.error('Password reset error:', error);
+                    alert('Error sending reset link: ' + error.message);
+                }
+            } else if (email) {
+                alert('Please enter a valid email address');
+            }
+        });
+
+        // Check if user is already logged in
+        async function checkAuth() {
+            try {
+                const { data: { user } } = await supabase.auth.getUser();
+                if (user) {
+                    window.location.href = '/chat.html';
+                }
+            } catch (error) {
+                console.error('Auth check error:', error);
+            }
+        }
+
+        // Run check on page load
+        checkAuth();
+    </script>
+</body>
+</html>

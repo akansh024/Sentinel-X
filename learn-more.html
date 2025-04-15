@@ -1,0 +1,355 @@
+<!DOCTYPE <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learn More - Sentinal-X</title>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Roboto+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #000;
+            color: #00ff00;
+            font-family: 'Roboto Mono', monospace;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Binary Background */
+        .binary-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .binary-bg span {
+            position: absolute;
+            color: #00ff00;
+            font-size: 1.2rem;
+            opacity: 0.3;
+            animation: fall 5s linear infinite;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100vh); }
+        }
+
+        /* Navbar */
+        .navbar {
+            padding: 1.5rem 5%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 255, 0, 0.1);
+        }
+
+        .logo img {
+            height: 80px;
+            width: auto;
+            filter: drop-shadow(0 0 5px #00ff00);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: #00ff00;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .nav-links a:hover {
+            color: #00b894;
+            text-shadow: 0 0 5px #00ff00;
+        }
+
+        /* Hero Section */
+        .learn-more-hero {
+            padding: 8rem 5%;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.7);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .learn-more-hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            color: #00ff00;
+            font-family: 'Orbitron', sans-serif;
+            text-shadow: 0 0 10px #00ff00;
+        }
+
+        .learn-more-hero p {
+            font-size: 1.5rem;
+            color: #00ff00;
+            margin-bottom: 2rem;
+            text-shadow: 0 0 5px #00ff00;
+        }
+
+        /* Tool Details Section */
+        .tool-details {
+            padding: 5rem 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(0, 0, 0, 0.7);
+            border: 1px solid #00ff00;
+            box-shadow: 0 0 10px #00ff00;
+            border-radius: 10px;
+            color: #00ff00;
+            z-index: 10;
+            position: relative;
+        }
+
+        .tool-details h2 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: #00ff00;
+            font-family: 'Orbitron', sans-serif;
+            text-shadow: 0 0 5px #00ff00;
+        }
+
+        .tool-details h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #00ff00;
+            font-family: 'Orbitron', sans-serif;
+            text-shadow: 0 0 5px #00ff00;
+        }
+
+        .tool-details p {
+            font-size: 1.1rem;
+            color: #00ff00;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .tool-details ul {
+            margin-bottom: 1.5rem;
+            padding-left: 2rem;
+        }
+
+        .tool-details ul li {
+            margin-bottom: 0.5rem;
+            color: #00ff00;
+        }
+
+        /* CTA Section */
+        .cta {
+            padding: 5rem 5%;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.7);
+            border-top: 1px solid #00ff00;
+        }
+
+        .cta h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: #00ff00;
+            font-family: 'Orbitron', sans-serif;
+            text-shadow: 0 0 10px #00ff00;
+        }
+
+        .cta p {
+            font-size: 1.2rem;
+            color: #00ff00;
+            margin-bottom: 2rem;
+            text-shadow: 0 0 5px #00ff00;
+        }
+
+        .cta .btn {
+            padding: 1rem 2rem;
+            border: 2px solid #00ff00;
+            border-radius: 5px;
+            background-color: #000;
+            color: #00ff00;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Orbitron', sans-serif;
+            text-decoration: none;
+        }
+
+        .cta .btn:hover {
+            background-color: #00ff00;
+            color: #000;
+            box-shadow: 0 0 10px #00ff00;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #000;
+            padding: 3rem 5%;
+            text-align: center;
+            border-top: 1px solid #00ff00;
+        }
+
+        footer p {
+            color: #00ff00;
+        }
+
+        footer a {
+            color: #00b894;
+            text-decoration: none;
+            margin: 0 1rem;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <!-- Binary Background -->
+    <div class="binary-bg" id="binary-bg"></div>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo"><img src="Black_and_Green_Modern_Tech_Company_Logo-removebg-preview.png" alt="Sentinal-X Logo"></div>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="tools.html">Tools</a>
+            <a href="about.html">About</a>
+            <a href="contact.html">Contact</a>
+            <a href="auth.html" class="btn btn-secondary">Login/Signup</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="learn-more-hero">
+        <h1>Learn More About Our Tools</h1>
+        <p>Discover how Sentinal-X can help you secure your digital life with our advanced cybersecurity tools.</p>
+    </section>
+
+    <!-- Tool Details Section -->
+    <section class="tool-details">
+        <h2>Secure Chat Application</h2>
+        <p>
+            Our Secure Chat Application provides end-to-end encryption to ensure your conversations remain private and secure.
+            Whether you're communicating with colleagues, friends, or family, you can trust that your messages are protected from prying eyes.
+        </p>
+        <h3>Key Features</h3>
+        <ul>
+            <li>End-to-end encryption for all messages</li>
+            <li>Self-destructing messages for added privacy</li>
+            <li>Secure file sharing with encryption</li>
+            <li>Cross-platform compatibility</li>
+        </ul>
+        <h3>How It Works</h3>
+        <p>
+            Simply sign up for a Sentinal-X account, download the app, and start chatting securely. Your messages are encrypted on your device
+            and can only be decrypted by the intended recipient.
+        </p>
+
+        <h2>Port Scanner</h2>
+        <p>
+            The Port Scanner tool allows you to scan your network for open ports and potential vulnerabilities. It's an essential tool for
+            network administrators and security professionals.
+        </p>
+        <h3>Key Features</h3>
+        <ul>
+            <li>Scan for open ports on any IP address</li>
+            <li>Detect potential vulnerabilities</li>
+            <li>Generate detailed reports</li>
+            <li>Easy-to-use interface</li>
+        </ul>
+        <h3>How It Works</h3>
+        <p>
+            Enter the IP address or domain name you want to scan, and the tool will analyze the network for open ports and vulnerabilities.
+            You'll receive a detailed report with recommendations for securing your network.
+        </p>
+
+        <h2>Password Strength</h2>
+        <p>
+            The Password Strength tool helps you create strong, secure passwords and provides instant feedback on the strength of your existing passwords.
+        </p>
+        <h3>Key Features</h3>
+        <ul>
+            <li>Check the strength of your passwords</li>
+            <li>Generate strong, random passwords</li>
+            <li>Get tips for improving password security</li>
+            <li>Secure password storage</li>
+        </ul>
+        <h3>How It Works</h3>
+        <p>
+            Enter your password into the tool, and it will analyze its strength based on length, complexity, and uniqueness. You'll receive
+            suggestions for improving your password security.
+        </p>
+
+        <h2>Vulnerability Scanner</h2>
+        <p>
+            The Vulnerability Scanner is a comprehensive tool for identifying security weaknesses in your web applications and infrastructure.
+        </p>
+        <h3>Key Features</h3>
+        <ul>
+            <li>Scan for common vulnerabilities</li>
+            <li>Detailed vulnerability reports</li>
+            <li>Automated scanning and monitoring</li>
+            <li>Integration with CI/CD pipelines</li>
+        </ul>
+        <h3>How It Works</h3>
+        <p>
+            Enter the URL of your web application, and the tool will scan for vulnerabilities such as SQL injection, cross-site scripting (XSS),
+            and more. You'll receive a detailed report with recommendations for fixing any issues.
+        </p>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <h2>Ready to Get Started?</h2>
+        <p>Join Sentinal-X today and take the first step towards a safer online experience.</p>
+        <a href="auth.html" class="btn">Sign Up Now</a>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2025 Sentinal-X. All rights reserved.</p>
+        <div style="margin-top: 1rem;">
+            <a href="privacy.html">Privacy Policy</a>
+            <a href="terms.html">Terms of Service</a>
+        </div>
+    </footer>
+
+    <!-- Binary Background Script -->
+    <script>
+        const binaryBg = document.getElementById('binary-bg');
+
+        function createBinary() {
+            const binaryChars = ['0', '1'];
+            const span = document.createElement('span');
+            span.textContent = binaryChars[Math.floor(Math.random() * binaryChars.length)];
+            span.style.left = Math.random() * 100 + 'vw';
+            span.style.animationDuration = Math.random() * 3 + 2 + 's';
+            binaryBg.appendChild(span);
+
+            setTimeout(() => {
+                span.remove();
+            }, 5000);
+        }
+
+        setInterval(createBinary, 100);
+    </script>
+</body>
+</html>
